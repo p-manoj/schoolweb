@@ -44,7 +44,7 @@ function displayQuestion() {
         }
     }, 1000);
     document.getElementById("quiz").classList.remove('hidden');
-    document.getElementById("submit").classList.remove('hidden');
+    // document.getElementById("submit").classList.remove('hidden');
     const questionContainer = document.getElementById('question');
     const optionsContainer = document.getElementById('options');
     const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -72,15 +72,7 @@ function checkAnswer(selectedOption, interval) {
     }
     nextQuestion();
 }
-function nextQuestion() {
-    currentQuestionIndex++;
 
-    if (currentQuestionIndex < quizQuestions.length) {
-        displayQuestion();
-    } else {
-        showResults();
-    }
-}
 //function for next question
 function nextQuestion() {
     currentQuestionIndex++;
@@ -107,7 +99,7 @@ function showResults() {
     const restartButton = document.createElement('button');
     restartButton.textContent = 'Restart Quiz';
     restartButton.addEventListener('click', restartQuiz);
-    document.getElementById('submit').classList.add("hidden");
+    // document.getElementById('submit').classList.add("hidden");
     optionsContainer.appendChild(restartButton);
 }
 
