@@ -54,3 +54,11 @@ button:hover {
 #score-container {
     text-align: center;
 }
+
+#timer {
+    display: flex;
+}
+
+.red {
+    color: red;
+}
