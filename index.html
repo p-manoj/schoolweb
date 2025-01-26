@@ -6,31 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="./style.css">
-    <!-- <script src="./App.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="./App.js" defer></script>
 </head>
 
 <body>
+
     <div class="quiz-container">
         <h1>Quiz App</h1>
-        <button id="start" onclick="startQuiz()">Start Quiz</button>
+        <div id="start">
+            <div id="user">
+                <label for="userName">User </label>
+                <input id="userName" type="text"></input>
+            </div>
+            <button id="startQuiz">Start Quiz</button>
+        </div>
         <div id="quiz" class="hidden">
-            <div id="timer"></div>
+            <div id="displayInfo">
+                <div id="userLoggedIn"></div>
+                <div id="timer"></div>
+            </div>
             <div id="question-container">
                 <h2 id="question"></h2>
                 <ul id="options"></ul>
             </div>
-
-            <!-- <div id="submit">
-                <button id="bck-btn" onclick="previousQuestion()">Back</button>
-                <button id="next-btn" onclick="nextQuestion()">Next</button>
-            </div> -->
         </div>
-        <div id="score-container" class="hidden">
-            <h2>Your Score: <span id="score"></span></h2>
-            <button id="restart-btn">Restart Quiz</button>
+        <div id="leaderBoard" class="hidden">
         </div>
     </div>
-    <script src="./App.js"></script>
+
 </body>
 
 </html>

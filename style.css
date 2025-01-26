@@ -55,10 +55,18 @@ button:hover {
     text-align: center;
 }
 
-#timer {
-    display: flex;
+#displayInfo {
+    padding: 10px;
 }
 
 .red {
     color: red;
+}
+
+#userLoggedIn {
+    float: left;
+}
+
+#timer {
+    float: right;
 }

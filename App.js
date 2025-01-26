@@ -1,5 +1,8 @@
 // JavaScript code for a simple quiz application
 // Array of questions
+import { updateUser, getUsers } from "./updateLeaderBoard.js";
+document.getElementById("startQuiz").addEventListener("click", startQuiz);
+let userName;
 const quizQuestions = [
     {
         question: "What is the capital of France?",
@@ -23,8 +26,15 @@ let score = 0;
 
 //function to start quiz
 function startQuiz() {
-    document.getElementById("start").classList.add("hidden");
-    displayQuestion();
+    userName = document.getElementById("userName").value;
+    if (userName == undefined || userName == "") {
+        alert("Please enter user name");
+    }
+    else {
+        document.getElementById("userLoggedIn").innerHTML = "Welcome " + userName;
+        document.getElementById("start").classList.add("hidden");
+        displayQuestion();
+    }
 }
 // Function to display a question
 function displayQuestion() {
@@ -81,6 +91,7 @@ function nextQuestion() {
     else
         showResults();
 }
+
 function previousQuestion() {
     currentQuestionIndex--;
     if (currentQuestionIndex < quizQuestions.length)
@@ -99,10 +110,38 @@ function showResults() {
     const restartButton = document.createElement('button');
     restartButton.textContent = 'Restart Quiz';
     restartButton.addEventListener('click', restartQuiz);
-    // document.getElementById('submit').classList.add("hidden");
     optionsContainer.appendChild(restartButton);
+    const leaderboardBtn = document.createElement('button');
+    leaderboardBtn.textContent = 'LeaderBoard';
+    leaderboardBtn.addEventListener('click', getLeaderBoard);
+    optionsContainer.appendChild(leaderboardBtn);
 }
 
+async function getLeaderBoard() {
+    const users = await getUsers();
+    users.sort((a, b) => b.score - a.score);
+    console.log(users);
+    await updateUser(userName, score);
+    showLeaderBoard(users);
+    //updating the score for the current user.
+}
+
+function showLeaderBoard(users) {
+    const parent = document.getElementById('leaderBoard');
+    const table = document.createElement('table');
+    table.innerHTML = `<tr><th>User Name</th><th>Score</th></tr>`;
+    users.forEach(user => {
+        const row = document.createElement('tr');
+        if (user.name == userName) {
+            row.innerHTML = `<td>${user.name}(You)</td><td>${score}</td>`;
+        }
+        else
+            row.innerHTML = `<td>${user.name}</td><td>${user.score}</td>`;
+        table.appendChild(row);
+    });
+    parent.appendChild(table);
+    parent.classList.remove('hidden');
+}
 // Function to restart the quiz
 function restartQuiz() {
     currentQuestionIndex = 0;
