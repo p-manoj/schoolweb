@@ -59,8 +59,3 @@ export async function updateUser(userName, score) {
         addUser(userName, score);
     }
 }
-
-// Run the functions
-//addUser();
-// getUsers();
-
