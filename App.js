@@ -92,13 +92,6 @@ function nextQuestion() {
         showResults();
 }
 
-function previousQuestion() {
-    currentQuestionIndex--;
-    if (currentQuestionIndex < quizQuestions.length)
-        displayQuestion();
-    else
-        showResults();
-}
 // Function to show results
 function showResults() {
     const questionContainer = document.getElementById('question');
@@ -120,7 +113,6 @@ function showResults() {
 async function getLeaderBoard() {
     const users = await getUsers();
     users.sort((a, b) => b.score - a.score);
-    console.log(users);
     await updateUser(userName, score);
     showLeaderBoard(users);
     //updating the score for the current user.
@@ -128,22 +120,30 @@ async function getLeaderBoard() {
 
 function showLeaderBoard(users) {
     const parent = document.getElementById('leaderBoard');
-    const table = document.createElement('table');
-    table.innerHTML = `<tr><th>User Name</th><th>Score</th></tr>`;
+    const leaderBoardHeader = document.createElement('div');
+    leaderBoardHeader.classList.add('leaderboard-header');
+    leaderBoardHeader.innerHTML = 'Leaderboard';
+    parent.appendChild(leaderBoardHeader);
+    const table = document.createElement('ul');
+    table.classList.add('leaderboard-list');
+    let index = 1;
     users.forEach(user => {
-        const row = document.createElement('tr');
+        const row = document.createElement('li');
+        row.classList.add('leaderboard-item');
         if (user.name == userName) {
-            row.innerHTML = `<td>${user.name}(You)</td><td>${score}</td>`;
+            row.innerHTML = `<span class="rank">${index++}</span><span class="name">${user.name}(You)</span><span class="score">${score}</span>`;
         }
         else
-            row.innerHTML = `<td>${user.name}</td><td>${user.score}</td>`;
+            row.innerHTML = `<span class="rank">${index++}</span><span class="name">${user.name}</span><span class="score">${score}</span>`;
         table.appendChild(row);
     });
     parent.appendChild(table);
     parent.classList.remove('hidden');
 }
+
 // Function to restart the quiz
 function restartQuiz() {
+    document.getElementById('leaderBoard').classList.add('hidden');
     currentQuestionIndex = 0;
     score = 0;
     displayQuestion();
